@@ -1,0 +1,12 @@
+{
+  "name": "twitter-login-api",
+  "version": "0.1.0",
+  "author": "srividya majeti",
+  "scripts": {
+	"deploy": "node app.js"
+  },
+  "dependencies": {
+    "twitter-node-client": "~0.0.6",
+    "express": "4.14.0"
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Angular Tweets</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+<div class="container" ng-app="twitterApp" ng-controller="mainController">
+ 
+  <div class="row">
+  	<div class="col-md-12">
+        <legend>Twitter Client</legend>
+      	<a href="/logout"><button class="btn btn-danger col-md-offset-11"> Logout</button></a><br/><br/>
+        <div ng-if="tweets[0].user.profile_banner_url != null"><img style="max-width:100%; max-height:100% " src="{{ tweets[0].user.profile_banner_url}}/1500x500"></div>
+        <div ng-if="tweets[0].user.profile_banner_url == null"><img src="images/no-thumb.jpg" width="100px" height="100px"></div>
+        
+  	</div>
+  </div><br/>
+  
+  <div class="row">
+   <div class="col-md-12">
+  	<form>
+    	<div class="form-group">
+      	<div class="input-group">
+        	<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        	<input type="text" class="form-control" placeholder="Search for Tweets" ng-model="searchTweet">
+      	</div>      
+    	</div>
+  	</form>
+  	</div>
+  </div>
+  
+  <table class="table table-bordered">
+    
+    <thead>
+      <tr>
+        <td>
+          <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Name
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#" ng-click="sortType = 'text'; sortReverse = !sortReverse">
+         Tweet 
+            <span ng-show="sortType == 'text' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'text' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#" ng-click="sortType = 'created_at'; sortReverse = !sortReverse">
+         Created At
+            <span ng-show="sortType == 'created_at' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'created_at' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr ng-repeat="tweet in tweets | orderBy:sortType:sortReverse | filter:searchTweet">
+        <td ng-if="tweet.entities.media[0].media_url != null"><img src="{{ tweet.entities.media[0].media_url}}" width="100px" height="100px"></td>
+        <td ng-if="tweet.entities.media[0].media_url == null"><img src="images/no-thumb.jpg" width="100px" height="100px"></td>
+        <td>{{ tweet.text }}</td>
+        <td>{{tweet.created_at  |  date }}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+</div>
+</body>
+<script src="js/angular.min.js"></script>
+<script src="js/index.js"></script>
+
+</html>
