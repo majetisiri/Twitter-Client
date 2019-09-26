@@ -52,7 +52,6 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { successRedirect : '/tweets', failureRedirect: '/login' }),
   function(req, res) {
-    // res.redirect('/account');
     res.sendFile('tweets.html');
     console.log(res);
   });
@@ -65,7 +64,6 @@ app.get('/tweets', function (req, res) {
 
 app.get('/account', ensureAuthenticated, function(req, res){
   var screenName=req.user.username;
-  console.log(req.user);
   var error = function (err, response, body) {
         console.log('ERROR [%s]', err);
     };
@@ -74,14 +72,13 @@ app.get('/account', ensureAuthenticated, function(req, res){
     };
 
   var config = {
-      "consumerKey": "wTSsHE3PTA3ZZPiaKHEiQnLtf",
-      "consumerSecret": "UblYYCmNYIEffAY4T4QHGHXwAWMFqiueXdxf35xZFhoK3AECP1",
-      "accessToken": "157985123-WFvzlfDa8KStBZzevMfQBTM7fi8zKHYl2LQpTfGr",
-      "accessTokenSecret": "lSax0XLwIimJ4VVbuU5OY9BpBic4vsSFi0riAq3DPvTxU"  
+      "consumerKey": "S6E4L0pevIppwYYTIT5Y1WHhy",
+      "consumerSecret": "rrEGzX20z5G6XQIV52EnpCo7AoBE1T8RNGx7Sxa2BrqTTnsvA0",
+      "accessToken": "157985123-KAyJIeShzCcTxox3oTLPBs229wBJtkY2Ggg7LB34",
+      "accessTokenSecret": "WNcWMbvFzO1wfmaV8jnueaIAzgq6sTTbfSYrsmejPuWuO"  
      }
 
   var twitter = new Twitter(config);
-    console.log(screenName);
     twitter.getUserTimeline({ screen_name:screenName}, error, success);
 
 });
